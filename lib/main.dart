@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/features/splash/splash_screen.dart';
 import 'package:flutter_application_2/navbar.dart';
 import 'package:flutter_application_2/splash_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -32,6 +33,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NavBar(title: "title");
+    return SplashScreen();
   }
 }

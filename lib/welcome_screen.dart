@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/features/nav/navigation_service.dart';
 import 'package:flutter_application_2/login.dart';
 import 'signup.dart';
+
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
@@ -10,7 +12,10 @@ class WelcomeScreen extends StatelessWidget {
 
     final double imageHeight = (size.height * 0.45).clamp(220.0, 500.0);
     final double topTextFontSize = (size.width * 0.14).clamp(35.0, 65.0);
-    final double verticalSpacingBetweenTextAndImage = (size.height * 0.4).clamp(10.0, 20.0);
+    final double verticalSpacingBetweenTextAndImage = (size.height * 0.4).clamp(
+      10.0,
+      20.0,
+    );
     final double bottomSpacerHeight = (size.height * 0.1).clamp(40.0, 180.0);
 
     double buttonHorizontalPadding(double factor) =>
@@ -24,10 +29,10 @@ class WelcomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height:verticalSpacingBetweenTextAndImage),
+              SizedBox(height: verticalSpacingBetweenTextAndImage),
               Text(
                 "Welcome!",
-                
+
                 style: TextStyle(
                   height: 1,
                   letterSpacing: 4,
@@ -41,10 +46,7 @@ class WelcomeScreen extends StatelessWidget {
 
               SizedBox(
                 height: imageHeight,
-                child: Image.asset(
-                  "images/pharoes.png",
-                  fit: BoxFit.contain,
-                ),
+                child: Image.asset("images/pharoes.png", fit: BoxFit.contain),
               ),
 
               SizedBox(height: verticalSpacingBetweenTextAndImage),
@@ -62,7 +64,8 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                       shape: RoundedRectangleBorder(
                         side: const BorderSide(
-                            color: Color.fromARGB(255, 254, 141, 0)),
+                          color: Color.fromARGB(255, 254, 141, 0),
+                        ),
                         borderRadius: BorderRadius.circular(25),
                       ),
                       textStyle: const TextStyle(
@@ -71,10 +74,7 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Login()),
-                      );
+                      NavigationService.goToLogin(context);
                     },
                     child: const Text('Login'),
                   ),
@@ -98,10 +98,7 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Signup()),
-                      );
+                      NavigationService.goToLogin(context);
                     },
                     child: const Text('Signup'),
                   ),

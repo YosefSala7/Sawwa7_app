@@ -142,11 +142,9 @@ class _LoginState extends State<Login> {
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return "Fill The Email";
+                              } else {
+                                return null;
                               }
-                              if (!value.endsWith("@gmail.com")) {
-                                return 'write email in the right format';
-                              }
-                              return null;
                             },
                             decoration: InputDecoration(
                               helperText: ' ',
@@ -186,9 +184,9 @@ class _LoginState extends State<Login> {
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return "Fill The Password";
+                              } else {
+                                return null;
                               }
-                              if (value.length < 9) return 'at least 9';
-                              return null;
                             },
                             obscureText: _obPassword,
                             decoration: InputDecoration(
@@ -251,8 +249,7 @@ class _LoginState extends State<Login> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        const NavBar(title: ''),
+                                    builder: (context) => const Navbar(),
                                   ),
                                 );
                               }
