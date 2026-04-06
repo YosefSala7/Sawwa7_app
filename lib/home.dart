@@ -87,7 +87,6 @@ class _HomeState extends State<Home> {
           padding: const EdgeInsets.all(7.0),
           child: Image.asset("images/FINAL LOGO.png"),
         ),
-        title: const Text(""),
         backgroundColor: const Color.fromRGBO(33, 33, 33, 1),
         actions: [
           IconButton(
