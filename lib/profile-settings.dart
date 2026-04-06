@@ -1,75 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/AllOnboarding.dart';
 import 'package:flutter_application_2/login.dart';
-import 'package:flutter_application_2/navbar.dart';
 import 'package:flutter_application_2/storageAuth.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  // Theme mode state
-  bool isLightMode = false;
-
-  void toggleTheme(bool value) {
-    setState(() {
-      isLightMode = value;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Profile ',
-      theme: ThemeData(
-        brightness: isLightMode ? Brightness.light : Brightness.dark,
-        scaffoldBackgroundColor: isLightMode
-            ? Colors.white
-            : const Color(0xFF131313),
-        primaryColor: const Color(0xFFFFA000),
-        splashColor: Colors.white24,
-        listTileTheme: const ListTileThemeData(
-          dense: true,
-          contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-        ),
-      ),
-      home: ProfilePage(onThemeChange: toggleTheme, isLightMode: isLightMode),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
 class ProfilePage extends StatefulWidget {
-  final bool isLightMode;
-  final Function(bool) onThemeChange;
-
-  const ProfilePage({
-    super.key,
-    required this.isLightMode,
-    required this.onThemeChange,
-  });
+  const ProfilePage({super.key});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  int _selectedIndex = 3; // Profile tab is last
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   Widget _buildOptionButton({
     required IconData icon,
     required String title,
@@ -279,12 +219,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => SettingsPage(
-                        isLightMode: widget.isLightMode,
-                        onThemeChange: widget.onThemeChange,
-                      ),
-                    ),
+                    MaterialPageRoute(builder: (context) => SettingsPage()),
                   );
                 },
               ),
@@ -311,27 +246,18 @@ class _ProfilePageState extends State<ProfilePage> {
 
 // ================= Settings Page =================
 class SettingsPage extends StatefulWidget {
-  final bool isLightMode;
-  final Function(bool) onThemeChange;
-
-  const SettingsPage({
-    super.key,
-    required this.isLightMode,
-    required this.onThemeChange,
-  });
+  const SettingsPage({super.key});
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  late bool isLightMode;
   String selectedLanguage = 'English';
 
   @override
   void initState() {
     super.initState();
-    isLightMode = widget.isLightMode;
   }
 
   @override
@@ -345,23 +271,7 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          ListTile(
-            leading: const Icon(Icons.light_mode, color: Colors.white70),
-            title: const Text(
-              'Light Mode',
-              style: TextStyle(color: Colors.white),
-            ),
-            trailing: Switch(
-              value: isLightMode,
-              onChanged: (value) {
-                setState(() {
-                  isLightMode = value;
-                  widget.onThemeChange(value); // ← changes theme dynamically
-                });
-              },
-              activeColor: Theme.of(context).primaryColor,
-            ),
-          ),
+          
           const Divider(color: Colors.white12),
           ListTile(
             leading: const Icon(Icons.language, color: Colors.white70),

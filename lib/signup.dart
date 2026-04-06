@@ -360,7 +360,7 @@ class _SignupState extends State<Signup> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        const NavBar(title: ''),
+                                        const NavBar(),
                                   ),
                                 );
                               }

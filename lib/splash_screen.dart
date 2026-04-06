@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // If not → start onboarding (b1)
     setState(() {
       nextScreen = hasToken
-          ? const NavBar(title: '')
+          ? const NavBar()
           : b1(); // start onboarding flow
     });
   }

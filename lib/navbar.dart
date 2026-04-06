@@ -13,13 +13,9 @@ import 'package:flutter_application_2/museums/Coptic_Museum.dart';
 import 'profile-settings.dart';
 
 class NavBar extends StatefulWidget {
-  const NavBar({super.key, required this.title});
+  const NavBar({super.key});
 
-  final String title;
 
-  void toggleTheme(bool value) {
-    // ❌ مش هيغير حاجة — مجرد placeholder
-  }
 
   @override
   State<NavBar> createState() => _NavBarState();
@@ -29,7 +25,7 @@ class _NavBarState extends State<NavBar> {
   int index = 0;
   late final pages = [
     Home(
-      dataa: [
+      data: [
         ["images/99.jpg", "Pyramids and sphinx", Pyramids()],
         ["images/m2.jpg", "Alexandria National Museum", alex()],
         ["images/m3.jpg", "Royal Jewelry Museum", royal()],
@@ -53,7 +49,7 @@ class _NavBarState extends State<NavBar> {
       ),
     ),
     Fav(cname: "fav", cimg: "images/f1.jpg"),
-    ProfilePage(isLightMode: false, onThemeChange: widget.toggleTheme),
+    ProfilePage(),
   ];
 
   @override
@@ -109,8 +105,6 @@ class _NavBarState extends State<NavBar> {
               context,
               MaterialPageRoute(
                 builder: (context) => ProfilePage(
-                  isLightMode: false,
-                  onThemeChange: widget.toggleTheme,
                 ),
               ),
             ),

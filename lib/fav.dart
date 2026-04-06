@@ -293,7 +293,7 @@ class _FavState extends State<Fav> {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => NavBar(title: "")),
+              MaterialPageRoute(builder: (context) => NavBar()),
             );
           },
         ),
