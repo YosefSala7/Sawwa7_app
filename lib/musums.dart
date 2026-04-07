@@ -250,7 +250,6 @@ Widget myBox(String pho, String placeName, Widget page, int i) {
   return StatefulBuilder(
     builder: (context, setState) {
       return Card(
-        
         color: const Color.fromARGB(255, 33, 33, 33),
         shadowColor: const Color.fromARGB(255, 88, 33, 1),
         elevation: 10,
@@ -291,7 +290,7 @@ Widget myBox(String pho, String placeName, Widget page, int i) {
                           try {
                             await supabase.from('fav').insert({
                               'user-id': user!.id,
-                            
+
                               'index': i,
                             });
                           } catch (error) {

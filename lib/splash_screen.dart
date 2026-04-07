@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/AllOnboarding.dart'; // contains b1, b2, b3
 import 'package:flutter_application_2/navbar.dart';
 import 'package:flutter_application_2/storageAuth.dart'; // token storage
-import 'package:flutter_application_2/welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -39,9 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
       // Show loading while checking token
       return const Scaffold(
         backgroundColor: Color.fromARGB(255, 33, 33, 33),
-        body: Center(
-          child: CircularProgressIndicator(color: Colors.white),
-        ),
+        body: Center(child: CircularProgressIndicator(color: Colors.white)),
       );
     }
 

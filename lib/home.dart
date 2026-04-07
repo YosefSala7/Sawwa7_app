@@ -1,27 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/core/models/place_model.dart';
+import 'package:flutter_application_2/features/historical_sites/data/sites_data.dart';
+import 'package:flutter_application_2/features/hotels/data/hotels_data.dart';
+import 'package:flutter_application_2/features/museums/data/museums_data.dart';
+import 'package:flutter_application_2/features/tours/data/tours_data.dart';
 import 'package:flutter_application_2/musums.dart';
-import 'package:flutter_application_2/Historical Sites/Citadel_of _Salah _ElDin.dart';
-import 'package:flutter_application_2/Historical Sites/library_of_alexandria.dart';
-import 'package:flutter_application_2/Historical Sites/pyramids.dart';
-import 'package:flutter_application_2/Historical Sites/qaitbay_citadel.dart';
-import 'package:flutter_application_2/Historical Sites/the_hanging_church.dart';
-import 'package:flutter_application_2/Historical Sites/the_roman _theater.dart';
-import 'package:flutter_application_2/museums/Alexandria_National_Museum.dart';
-import 'package:flutter_application_2/museums/Coptic_Museum.dart';
-import 'package:flutter_application_2/museums/Grand_Egyptian.dart';
-import 'package:flutter_application_2/museums/Islamic_Art.dart';
-import 'package:flutter_application_2/museums/Royal_Jewelry_Museum.dart';
-import 'package:flutter_application_2/museums/graeco_roman_museum.dart';
-import 'package:flutter_application_2/Hotels/AlexHilton.dart';
-import 'package:flutter_application_2/Hotels/CPH.dart';
-import 'package:flutter_application_2/Hotels/Luxorhotel.dart';
-import 'package:flutter_application_2/Hotels/aswanhotel.dart';
-import 'package:flutter_application_2/Hotels/hurghadahotel.dart';
-import 'package:flutter_application_2/Hotels/sharmhotel.dart';
-import 'package:flutter_application_2/Tours/Aswantour.dart';
-import 'package:flutter_application_2/Tours/alextour.dart';
-import 'package:flutter_application_2/Tours/ctour.dart';
-import 'package:flutter_application_2/Tours/luxortour.dart';
+import 'package:flutter_application_2/pages/detail_page.dart';
 import 'profile-settings.dart';
 
 class Home extends StatefulWidget {
@@ -40,18 +24,16 @@ class _HomeState extends State<Home> {
     {'image': 'img/4.jpg', 'name': 'Alexandria'},
   ];
 
-  void toggleTheme(bool value) {
-    // ❌ مش هيغير حاجة — مجرد placeholder
-  }
+  void toggleTheme(bool value) {}
 
   final List<bool> favorites = [];
   final TextEditingController _searchController = TextEditingController();
   List<dynamic> filteredData = [];
+
   @override
   void initState() {
     super.initState();
     favorites.addAll(List.generate(places.length, (_) => false));
-    // initialize filteredData with all items
     filteredData = List.from(widget.dataa);
   }
 
@@ -108,7 +90,6 @@ class _HomeState extends State<Home> {
                   _filter(result);
                 }
               }
-              
             },
           ),
           Padding(
@@ -145,6 +126,7 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: screenHeight * 0.015),
+              // Search Bar
               Center(
                 child: SizedBox(
                   height: screenHeight * 0.06,
@@ -155,7 +137,6 @@ class _HomeState extends State<Home> {
                         controller: _searchController,
                         onChanged: (v) {
                           _filter(v);
-                          // update suffix icon state
                           setLocalState(() {});
                         },
                         style: const TextStyle(color: Colors.white),
@@ -212,164 +193,109 @@ class _HomeState extends State<Home> {
                   fontFamily: "norse-bold",
                 ),
               ),
-
               SizedBox(height: screenHeight * 0.015),
 
-              // كاتيجوريز
+              // Categories
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
+                    // Historical Places
                     categoryItem(
                       "images/category1.png",
                       "Historical Places",
-                      () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => museums(
-                              cname: 'Historical Places',
-                              cimg: "images/category1.png",
-                              dataa: [
-                                [
-                                  "images/salahel.jpg",
-                                  "Citadel Salah El Din",
-                                  citadel(),
-                                ],
-                                [
-                                  "images/22.jpg",
-                                  "The Hanging Church",
-                                  Thehangingchurch(),
-                                ],
-                                [
-                                  "images/99.jpg",
-                                  "Pyramids and Sphinx",
-                                  Pyramids(),
-                                ],
-                                ["images/8.jpg", "Qaitbay Citadel", qaitbay()],
-                                [
-                                  "images/R.jpg",
-                                  "Alexandria Library",
-                                  librarry(),
-                                ],
-                                ["images/55.jpg", "The Roman Theater", roman()],
-                              ],
-                            ),
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => museums(
+                            cname: 'Historical Places',
+                            cimg: "images/category1.png",
+                            dataa: HistoricalSitesData.sites
+                                .map(
+                                  (place) => [
+                                    place.imagePath,
+                                    place.title,
+                                    DetailPage(place: place),
+                                  ],
+                                )
+                                .toList(),
                           ),
-                        );
-                      },
+                        ),
+                      ),
                     ),
-
                     // Museums
-                    categoryItem("images/category2.png", "Museums", () {
-                      Navigator.push(
+                    categoryItem(
+                      "images/category2.png",
+                      "Museums",
+                      () => Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => museums(
                             cname: 'Museums',
                             cimg: "images/category2.png",
-                            dataa: [
-                              [
-                                "images/m1.jpg",
-                                "Graeco Roman Museums",
-                                graeco(),
-                              ],
-                              [
-                                "images/m2.jpg",
-                                "Alexandria National Museums",
-                                alex(),
-                              ],
-                              [
-                                "images/m3.jpg",
-                                "Royal Jewelry Museums",
-                                royal(),
-                              ],
-                              ["images/m4.jpg", "The Coptic Museums", coptic()],
-                              [
-                                "images/m5.jpg",
-                                "Great Egyptian Museum",
-                                grand(),
-                              ],
-                              [
-                                "images/m6.jpg",
-                                "Museum of Islamic Art",
-                                islamicart(),
-                              ],
-                            ],
+                            dataa: MuseumsData.museums
+                                .map(
+                                  (place) => [
+                                    place.imagePath,
+                                    place.title,
+                                    DetailPage(place: place),
+                                  ],
+                                )
+                                .toList(),
                           ),
                         ),
-                      );
-                    }),
-
+                      ),
+                    ),
                     // Hotels
-                    categoryItem("images/HHH.png", "Hotels", () {
-                      Navigator.push(
+                    categoryItem(
+                      "images/HHH.png",
+                      "Hotels",
+                      () => Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => museums(
                             cname: 'Hotels',
                             cimg: "images/HHH.png",
-                            dataa: [
-                              [
-                                "images/h1.jpg",
-                                "Cairo Pyramids Hotel",
-                                cairo_hotel(),
-                              ],
-                              [
-                                "images/h2.jpg",
-                                "Hilton Alexandria GreenPlaza",
-                                Alex_hotel(),
-                              ],
-                              [
-                                "images/h3.jpg",
-                                "Hilton Luxor Resort Spa",
-                                luxor_hotel(),
-                              ],
-                              [
-                                "images/h4.jpg",
-                                "Movenpick Aswan Hotel",
-                                Aswan_hotel(),
-                              ],
-                              [
-                                "images/h5.jpg",
-                                "Barcelo Tiran Sharm Resort",
-                                sharm(),
-                              ],
-                              [
-                                "images/h6.jpg",
-                                "Hilton Hurghada Plaza",
-                                hurghada(),
-                              ],
-                            ],
+                            dataa: HotelsData.hotels
+                                .map(
+                                  (place) => [
+                                    place.imagePath,
+                                    place.title,
+                                    DetailPage(place: place),
+                                  ],
+                                )
+                                .toList(),
                           ),
                         ),
-                      );
-                    }),
-
+                      ),
+                    ),
                     // City Tours
-                    categoryItem("images/category4.png", "City Tours", () {
-                      Navigator.push(
+                    categoryItem(
+                      "images/category4.png",
+                      "City Tours",
+                      () => Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => museums(
                             cname: 'City Tours',
                             cimg: "images/category4.png",
-                            dataa: [
-                              ["images/c1.jpg", "Cairo", Cairo_tour()],
-                              ["images/c2.jpg", "Alex", Alex_tour()],
-                              ["images/c3.jpg", "Aswan", Aswan_tour()],
-                              ["images/c4.jpg", "Luxor", luxor_tour()],
-                            ],
+                            dataa: ToursData.tours
+                                .map(
+                                  (place) => [
+                                    place.imagePath,
+                                    place.title,
+                                    DetailPage(place: place),
+                                  ],
+                                )
+                                .toList(),
                           ),
                         ),
-                      );
-                    }),
+                      ),
+                    ),
                   ],
                 ),
               ),
-
               SizedBox(height: screenHeight * 0.03),
-
               Text(
                 "Popular Destinations",
                 style: TextStyle(
@@ -378,9 +304,7 @@ class _HomeState extends State<Home> {
                   fontFamily: "norse-bold",
                 ),
               ),
-
               SizedBox(height: screenHeight * 0.02),
-
               SizedBox(
                 height: screenHeight * 0.55,
                 child: GridView.builder(
@@ -452,9 +376,9 @@ class _HomeState extends State<Home> {
   }
 }
 
+// Search Delegate
 class MySearchDelegate extends SearchDelegate {
   final List<dynamic> data;
-
   MySearchDelegate(this.data);
 
   List<dynamic> _filterResults(String query) {
@@ -491,9 +415,7 @@ class MySearchDelegate extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     final results = _filterResults(query);
-    if (results.isEmpty) {
-      return const Center(child: Text('No results'));
-    }
+    if (results.isEmpty) return const Center(child: Text('No results'));
     return ListView.builder(
       itemCount: results.length,
       itemBuilder: (context, index) {
@@ -505,10 +427,7 @@ class MySearchDelegate extends SearchDelegate {
             child: Image.asset(item[0], fit: BoxFit.cover),
           ),
           title: Text(item[1].toString()),
-          onTap: () {
-            // return the selected item to the caller (home) which will handle navigation
-            close(context, item);
-          },
+          onTap: () => close(context, item),
         );
       },
     );
@@ -528,10 +447,7 @@ class MySearchDelegate extends SearchDelegate {
             child: Image.asset(item[0], fit: BoxFit.cover),
           ),
           title: Text(item[1].toString()),
-          onTap: () {
-            // Immediately return the tapped suggestion as the selected item
-            close(context, item);
-          },
+          onTap: () => close(context, item),
         );
       },
     );
@@ -579,15 +495,10 @@ Widget cont(
                       child: IconButton(
                         icon: Icon(
                           isFavorite ? Icons.favorite : Icons.favorite_border,
-                          color: isFavorite
-                              ? const Color.fromARGB(255, 88, 33, 1)
-                              : const Color.fromARGB(255, 88, 33, 1),
+                          color: const Color.fromARGB(255, 88, 33, 1),
                         ),
-                        onPressed: () {
-                          setState(() {
-                            isFavorite = !isFavorite;
-                          });
-                        },
+                        onPressed: () =>
+                            setState(() => isFavorite = !isFavorite),
                       ),
                     ),
                   ),
@@ -626,10 +537,19 @@ Widget cont(
                     ),
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => destination),
-                    );
+                    if (destination is PlaceModel) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailPage(place: destination),
+                        ),
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => destination),
+                      );
+                    }
                   },
                   child: const Text(
                     "Explore Now",

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/AllOnboarding.dart';
 import 'package:flutter_application_2/login.dart';
-import 'package:flutter_application_2/navbar.dart';
 import 'package:flutter_application_2/storageAuth.dart';
 
 void main() {
@@ -359,7 +357,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   widget.onThemeChange(value); // ← changes theme dynamically
                 });
               },
-              activeColor: Theme.of(context).primaryColor,
+              activeThumbColor: Theme.of(context).primaryColor,
             ),
           ),
           const Divider(color: Colors.white12),

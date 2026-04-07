@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/fav.dart';
+import 'package:flutter_application_2/features/historical_sites/data/sites_data.dart';
+import 'package:flutter_application_2/features/hotels/data/hotels_data.dart';
+import 'package:flutter_application_2/features/museums/data/museums_data.dart';
+import 'package:flutter_application_2/features/tours/data/tours_data.dart';
 import 'package:flutter_application_2/home.dart';
-import 'package:flutter_application_2/museums/Alexandria_National_Museum.dart';
-import 'package:flutter_application_2/Historical Sites/pyramids.dart';
-import 'package:flutter_application_2/Historical Sites/library_of_alexandria.dart';
-import 'package:flutter_application_2/museums/Grand_Egyptian.dart';
-import 'package:flutter_application_2/museums/graeco_roman_museum.dart';
-import 'package:flutter_application_2/Historical Sites/qaitbay_citadel.dart';
-import 'package:flutter_application_2/museums/Islamic_Art.dart';
-import 'package:flutter_application_2/museums/Royal_Jewelry_Museum.dart';
-import 'package:flutter_application_2/museums/Coptic_Museum.dart';
 import 'profile-settings.dart';
 
 class NavBar extends StatefulWidget {
@@ -30,18 +25,13 @@ class _NavBarState extends State<NavBar> {
   late final pages = [
     Home(
       dataa: [
-        ["images/99.jpg", "Pyramids and sphinx", Pyramids()],
-        ["images/m2.jpg", "Alexandria National Museum", alex()],
-        ["images/m3.jpg", "Royal Jewelry Museum", royal()],
-        ["images/m4.jpg", "The Coptic Museum", coptic()],
-        ["images/m5.jpg", "Great Egyptian Museum", grand()],
-        ["images/m6.jpg", "Museum of Islamic Art", islamicart()],
-        ["images/R.jpg", "Alexandria Library", librarry()],
-        ["images/m1.jpg", "Graeco Roman   Museums", graeco()],
-        ["images/8.jpg", "Qaitbay Citadel", qaitbay()],
-        ["images/m6.jpg", "Museum of Islamic Art", islamicart()],
+        ...HistoricalSitesData.sites.map((p) => [p.imagePath, p.title, p]),
+        ...MuseumsData.museums.map((p) => [p.imagePath, p.title, p]),
+        ...HotelsData.hotels.map((p) => [p.imagePath, p.title, p]),
+        ...ToursData.tours.map((p) => [p.imagePath, p.title, p]),
       ],
     ),
+
     Center(
       child: Text(
         "Comming Soon",

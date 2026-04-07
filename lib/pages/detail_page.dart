@@ -1,37 +1,13 @@
 import 'package:flutter/material.dart';
-void main() {
-  runApp(const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    // home: page(
-    //   path: "images/baron.jpg",
-    //   t1: "Baron Palace",
-    //   t2: "Heliopolis, Cairo",
-    //   description:
-    //       "The Baron Empain Palace is a historical landmark in Heliopolis, Cairo, built by Belgian industrialist Baron Empain.",
-    //   egyptianPrice: "20 EGP",
-    //   foreignPrice: "60 \$",
-    // ),
-    // home: const Home(),
-  ));
-}
+import '../core/models/place_model.dart';
 
-class page extends StatelessWidget {
-  final String? t1;
-  final String? t2;
-  final String? path;
-  final String? description;
-  final String? egyptianPrice;
-  final String? foreignPrice;
+/// الصفحة الواحدة اللي بتشتغل مع كل حاجة:
+/// Historical Sites / Museums / Hotels / Tours
+///
+class DetailPage extends StatelessWidget {
+  final PlaceModel place;
 
-  const page({
-    super.key,
-    required this.path,
-    required this.t1,
-    required this.t2,
-    required this.description,
-    required this.egyptianPrice,
-    required this.foreignPrice,
-  });
+  const DetailPage({super.key, required this.place});
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +17,7 @@ class page extends StatelessWidget {
         backgroundColor: Colors.black45,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
         ),
       ),
       body: SingleChildScrollView(
@@ -57,23 +31,27 @@ class page extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // ── image ──
                 ClipRRect(
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(12),
                     topRight: Radius.circular(12),
                   ),
                   child: Image.asset(
-                    path!,
+                    place.imagePath,
                     height: 200,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
                 ),
+
                 const SizedBox(height: 16),
+
+                // ── Address ────
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
-                    t1!,
+                    place.title,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -81,7 +59,10 @@ class page extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 12),
+
+                // ── location ───
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Row(
@@ -89,15 +70,16 @@ class page extends StatelessWidget {
                       const Icon(Icons.location_on, color: Colors.orange),
                       const SizedBox(width: 4),
                       Text(
-                        t2!,
+                        place.location,
                         style: const TextStyle(color: Colors.white),
                       ),
                     ],
                   ),
                 ),
+
                 const SizedBox(height: 16),
 
-                // 🟡 كارد الوصف
+                // ── details ──
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(
@@ -106,26 +88,26 @@ class page extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     padding: const EdgeInsets.all(16),
-                    child: Center(
-                      child: Text(
-                        description!,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          height: 1.5,
-                        ),
-                        textAlign: TextAlign.start,
+                    child: Text(
+                      place.description,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        height: 1.5,
                       ),
+                      textAlign: TextAlign.start,
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 20),
 
-                // 🎟️ كارت التيكت المتبدلة
+                // ──Elـ Animated Ticket ────
                 TicketAnimated(
-                  egyptianPrice: egyptianPrice!,
-                  foreignPrice: foreignPrice!,
+                  egyptianPrice: place.egyptianPrice,
+                  foreignPrice: place.foreignPrice,
                 ),
+
                 const SizedBox(height: 20),
               ],
             ),
@@ -135,6 +117,8 @@ class page extends StatelessWidget {
     );
   }
 }
+
+// Animated Ticket Widget —
 
 class TicketAnimated extends StatefulWidget {
   final String egyptianPrice;
@@ -157,11 +141,7 @@ class _TicketAnimatedState extends State<TicketAnimated> {
   Widget build(BuildContext context) {
     return Center(
       child: GestureDetector(
-        onTap: () {
-          setState(() {
-            isEgyptian = !isEgyptian;
-          });
-        },
+        onTap: () => setState(() => isEgyptian = !isEgyptian),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 400),
           curve: Curves.easeInOut,
@@ -172,7 +152,10 @@ class _TicketAnimatedState extends State<TicketAnimated> {
             gradient: LinearGradient(
               colors: isEgyptian
                   ? [Colors.orangeAccent, Colors.deepOrange]
-                  : [const Color.fromARGB(246, 57, 124, 91), const Color.fromARGB(255, 18, 37, 22)],
+                  : [
+                      const Color.fromARGB(246, 57, 124, 91),
+                      const Color.fromARGB(255, 18, 37, 22),
+                    ],
             ),
             boxShadow: [
               BoxShadow(
@@ -184,20 +167,18 @@ class _TicketAnimatedState extends State<TicketAnimated> {
           ),
           child: AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
-            transitionBuilder: (child, animation) => ScaleTransition(
-              scale: animation,
-              child: child,
-            ),
+            transitionBuilder: (child, animation) =>
+                ScaleTransition(scale: animation, child: child),
             child: isEgyptian
-                ? ticketContent("For Egyptians", widget.egyptianPrice)
-                : ticketContent("For Foreigners", widget.foreignPrice),
+                ? _ticketContent("For Egyptians", widget.egyptianPrice)
+                : _ticketContent("For Foreigners", widget.foreignPrice),
           ),
         ),
       ),
     );
   }
 
-  Widget ticketContent(String title, String price) {
+  Widget _ticketContent(String title, String price) {
     return Column(
       key: ValueKey(title),
       mainAxisAlignment: MainAxisAlignment.center,
@@ -223,9 +204,8 @@ class _TicketAnimatedState extends State<TicketAnimated> {
         const Text(
           "Tap to switch",
           style: TextStyle(color: Colors.white70, fontSize: 14),
-        )
+        ),
       ],
     );
   }
 }
-
